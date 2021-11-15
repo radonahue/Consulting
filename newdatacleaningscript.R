@@ -1,4 +1,7 @@
 library(openxlsx)
+library(dplyr)
+library(meta)
+library(metafor)
 data<-read.xlsx("Final Studies_Meta Analysis_1.3.xlsx", rows =2:15)
 #trying to fill in some missing values that were merged/blank in the excel file
 data[2,1]<-data[1,1]
@@ -75,6 +78,12 @@ meta<-data[,c(1, 6:8, 10:12)]
 
 names(meta) <- c("StudyID", "Size", "MeanDiff_SBP", "MeanDiff_DBP", "SE_SBP", "SE_DBP", "Duration_M")
 
+meta_SBP <- metagen(TE = MeanDiff_SBP, seTE = SE_SBP, studlab = StudyID, data = meta, sm = "MD", comb.fixed = F, comb.random = T, method.tau = "SJ", title = "SBP", prediction = TRUE)
+meta_SBP
 
+funnel.meta(meta_SBP, studlab = TRUE)
 
+meta_DBP <- metagen(TE = MeanDiff_DBP, seTE = SE_DBP, studlab = StudyID, data = meta, sm = "MD", comb.fixed = F, comb.random = T, method.tau = "SJ", title = "DBP", prediction = TRUE)
+meta_DBP
 
+funnel.meta(meta_DBP, studlab = TRUE)
