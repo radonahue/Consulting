@@ -72,7 +72,7 @@ data[7,13]<-substr(data[7,13], 5, 12)
 data[2,12]<-data[1, 12]
 data[3,12]<-data[1, 12]
 
-as.numeric(data$In.months)
+data$In.months<-as.numeric(data$In.months)
 
 meta<-data[,c(1, 6:8, 10:12)]
 
